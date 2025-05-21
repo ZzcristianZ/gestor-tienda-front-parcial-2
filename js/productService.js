@@ -41,7 +41,7 @@ function products() {
                     <td>${element.name}</td>
                     <td>${element.slug}</td>
                     <td><img src="${element.image}" class="img-thumbnail" alt"Imagen de la categoria"></td> 
-                    <td><button type="button" class="btn btn-outline-info" onclick="getProduct('${element.id}')">Ver</button></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="getProduct('${element.id}')">Ver</button></td>
                 `
             });
             document.getElementById('info').innerHTML=list_products
