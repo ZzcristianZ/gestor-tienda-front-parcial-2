@@ -24,14 +24,14 @@ function users() {
     .then((result)=>{
       if (result.status===200) {
           console.log(result)
-            let list_user = `<table class="table table-hover">
+            let list_user = `<table class="table table-hover table-striped">
             <thead>
             <tr>
-            <th scope="col">#</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Slug</th>
-            <th scope="col">Accion</th>
+            <th scope="col">ID</th>
+            <th scope="col">PRODUCTOS</th>
+            <th scope="col">PRECIO</th>
+            <th scope="col">SLUG</th>
+            <th scope="col">ACCION</th>
             </tr>
             </thead>
             <tbody>
@@ -43,31 +43,10 @@ function users() {
                 <td>${element.title}</td>
                 <td>${"$"+element.price}</td>
                 <td>${element.slug}</td>
-                <td><button type="button" class="btn btn-outline-info" onclick="getUser('${element.id}')">Ver</button></td>
+                <td><button type="button" class="btn btn-secondary" onclick="getUser('${element.id}')">Ver</button></td>
                 </tr>
                 `
             });
-            list_user=list_user+`
-            </tbody>
-            </table>
-                        <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#" onclick="users('1')">1</a></li>
-                <li class="page-item"><a class="page-link" href="#" onclick="users('2')">2</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            `
-            
             document.getElementById('info').innerHTML=list_user
         }else{
             document.getElementById('info').innerHTML = 'no existen ususarios en la BD'

@@ -1,11 +1,11 @@
-function products(pagina) {
+function products() {
     document.getElementById('cardHeader').innerHTML ='<h5>Listado de Categorias</h5>'
-    const REQRES_ENDPOINT = 'https://reqres.in/api/products?page='+pagina
+    const REQRES_ENDPOINT = 'https://api.escuelajs.co/api/v1/categories'
     fetch(REQRES_ENDPOINT,  {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
-            'x-api-key':'reqres-free-v1'
+            
         }
     })
     .then((response)=>{
@@ -20,51 +20,30 @@ function products(pagina) {
     })
     .then((result)=>{
         if (result.status===200) {
-            let list_products = `<table class="table">
+            let list_products = `<table class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombres</th>
-                    <th scope="col">Año</th>
-                    <th scope="col">Value pantone</th>
-                    <th scope="col">color</th>
+                    
+                    <th scope="col">ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">SLUG</th>
+                    <th scope="col">IMAGE</th>
                     <th >Accion</th>
                   </tr>
                 </thead>
                 <tbody>
                 
             `
-            result.info.data.forEach(element => {
+            result.info.forEach(element => {
                 list_products=list_products+`
                 <tr>
                     <td>${element.id}</td>
                     <td>${element.name}</td>
-                    <td>${element.year}</td>
-                    <td>${element.pantone_value}</td>
-                    <td><input type='color' value='${element.color}'></td>
+                    <td>${element.slug}</td>
+                    <td><img src="${element.image}" class="img-thumbnail" alt"Imagen de la categoria"></td> 
                     <td><button type="button" class="btn btn-outline-info" onclick="getProduct('${element.id}')">Ver</button></td>
                 `
             });
-            list_products=list_products+`
-                </tbody>
-            </table>
-                        <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#" onclick="products('1')">1</a></li>
-                <li class="page-item"><a class="page-link" href="#" onclick="products('2')">2</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            `
             document.getElementById('info').innerHTML=list_products
         }else{
             document.getElementById('info').innerHTML = 'no existen ususarios en la BD'
@@ -75,12 +54,12 @@ function products(pagina) {
 
 function getProduct(idProduct) {
     console.log("id", idProduct)
-    const REQRES_ENDPOINT = 'https://reqres.in/api/products/'+idProduct;
+    const REQRES_ENDPOINT = 'https://api.escuelajs.co/api/v1/categories/'+idProduct;
     fetch(REQRES_ENDPOINT,  {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
-            'x-api-key':'reqres-free-v1'
+            
         }
     })
     .then((result)=>{
@@ -96,7 +75,7 @@ function getProduct(idProduct) {
     })
     .then((response)=>{
         if(response.status===200){
-            const productos= response.body.data
+            const productos= response.body
             console.log("id", productos)
             const modalProductos= `
                                 <div class="modal fade" id="modalProductos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,14 +87,14 @@ function getProduct(idProduct) {
                       </div>
                       <div class="modal-body">
                         <div class="card">
-                          <div class="card" style="background-color:${productos.color}; padding: 20px;">
+
  
                           <div class="card-body">
                           <h5 class= "card-title" >Informacion del producto</h5>
                           
                             <p class="card-text">Nombre: ${productos.name}</p>
-                            <p class="card-text">año: ${productos.year} </p>
-                            <p class="card-text">año: ${productos.pantone_value} </p>
+                            <p class="card-text">ID: ${productos.id} </p>
+                            <p class="card-text">SLUG: ${productos.slug} </p>
                           </div>
                         </div>
                       </div>
